@@ -64,8 +64,8 @@ const AddCategoryModal = ({
   };
 
   return (
-    <div className={`fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center ${showAddCategoryModal ? 'block' : 'hidden'}`}>
-      <div className="bg-white rounded-lg overflow-hidden w-[620px] h-[620px] max-w-[90%] max-h-[90%]">
+    <div className={`fixed inset-0 bg-white bg-opacity-10 backdrop-blur-sm flex items-center justify-center ${showAddCategoryModal ? 'block' : 'hidden'}`}>
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
         <div className="p-5 border-b border-gray-200">
           <p className="text-xl font-semibold text-gray-800">Thêm danh mục mới</p>
         </div>

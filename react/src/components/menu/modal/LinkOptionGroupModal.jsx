@@ -48,8 +48,22 @@ const LinkOptionGroupModal = ({
     setShowLinkModal(false);
   };
 
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setShowLinkModal(false);
+    }
+  };
+
   return (
-    <div className={`fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center ${showLinkModal ? 'block' : 'hidden'}`}>
+    <div
+      className={`fixed inset-0 flex items-center justify-center ${showLinkModal ? "block" : "hidden"}`}
+      style={{
+        backgroundColor: "rgba(0, 0, 0, 0.5)", // Màu đen với độ mờ 50%
+        backdropFilter: "blur(4px)", // Hiệu ứng mờ
+        WebkitBackdropFilter: "blur(4px)", // Hỗ trợ Safari
+      }}
+      onClick={handleOverlayClick}
+    >
       <div className="bg-white rounded-lg overflow-hidden w-[620px] h-[620px] max-w-[90%] max-h-[90%]">
         <div className="p-5 border-b border-gray-200">
           <p className="text-xl font-semibold text-gray-800">Liên kết nhóm tùy chọn</p>

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import MenuList from '../components/menu/MenuList';
 import OptionGroupsList from '../components/menu/OptionGroupsList';
 import Modals from '../components/menu/Modals';
+import AddOptionGroupModal from '../components/menu/modal/AddOptionGroupModal';
 import * as ApiService from '../components/menu/ApiService';
 
 const MenuScreen = () => {
@@ -109,7 +110,7 @@ const MenuScreen = () => {
       !addOptionGroupData.groupName ||
       addOptionGroupData.options.some((opt) => !opt.name || !opt.price)
     ) {
-      alert('Please fill in the group name and at least one valid option');
+      alert('Vui lòng điền tên nhóm và ít nhất một tùy chọn hợp lệ');
       return;
     }
     setIsLoading(true);
@@ -119,7 +120,7 @@ const MenuScreen = () => {
       setAddOptionGroupData({ groupName: '', options: [{ name: '', price: '' }] });
       setShowAddOptionGroupModal(false);
     } catch (error) {
-      alert('Failed to add option group');
+      alert('Không thể thêm nhóm tùy chọn');
     } finally {
       setIsLoading(false);
     }
@@ -249,60 +250,16 @@ const MenuScreen = () => {
         permissionDenied={permissionDenied}
         setPermissionDenied={setPermissionDenied}
       />
-      {/* Add Option Group Modal */}
-      {showAddOptionGroupModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center">
-          <div className="bg-white rounded-lg p-6 w-11/12 max-w-md">
-            <h2 className="text-xl font-semibold mb-4">Add New Option Group</h2>
-            <input
-              className="border border-gray-300 rounded-lg p-2 mb-3 w-full"
-              placeholder="Option group name"
-              value={addOptionGroupData.groupName}
-              onChange={(e) =>
-                setAddOptionGroupData({ ...addOptionGroupData, groupName: e.target.value })
-              }
-            />
-            {addOptionGroupData.options.map((option, index) => (
-              <div key={index} className="mb-3">
-                <input
-                  className="border border-gray-300 rounded-lg p-2 mb-1 w-full"
-                  placeholder="Option name"
-                  value={option.name}
-                  onChange={(e) => updateOptionField(index, 'name', e.target.value)}
-                />
-                <input
-                  className="border border-gray-300 rounded-lg p-2 w-full"
-                  placeholder="Price (e.g., 10000)"
-                  type="number"
-                  value={option.price}
-                  onChange={(e) => updateOptionField(index, 'price', e.target.value)}
-                />
-              </div>
-            ))}
-            <button
-              onClick={addOptionField}
-              className="bg-gray-200 p-2 rounded-lg mb-3 w-full text-gray-800"
-            >
-              + Add Option
-            </button>
-            <div className="flex justify-end mt-4">
-              <button
-                onClick={() => setShowAddOptionGroupModal(false)}
-                className="px-4 py-2 mr-2 text-gray-600"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleAddOptionGroup}
-                className="bg-green-600 px-4 py-2 rounded-lg text-white"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Loading...' : 'Add'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <AddOptionGroupModal
+        showAddOptionGroupModal={showAddOptionGroupModal}
+        setShowAddOptionGroupModal={setShowAddOptionGroupModal}
+        addOptionGroupData={addOptionGroupData}
+        setAddOptionGroupData={setAddOptionGroupData}
+        handleAddOptionGroup={handleAddOptionGroup}
+        addOptionField={addOptionField}
+        updateOptionField={updateOptionField}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

@@ -1,15 +1,15 @@
-import React from 'react';
-import * as ApiService from '../ApiService';
+import React from "react";
+import * as ApiService from "../ApiService";
 
 // Define interfaces
 const Option = {
   name: String,
-  price: String
+  price: String,
 };
 
 const OptionGroup = {
   groupName: String,
-  options: [Option]
+  options: [Option],
 };
 
 const Dish = {
@@ -19,13 +19,13 @@ const Dish = {
   available: Boolean,
   image: String,
   optionGroups: [OptionGroup],
-  category: String
+  category: String,
 };
 
 const Category = {
   name: String,
   count: Number,
-  dishes: [Dish]
+  dishes: [Dish],
 };
 
 const AddDishModal = ({
@@ -39,7 +39,7 @@ const AddDishModal = ({
   setIsLoading,
   permissionDenied,
   setPermissionDenied,
-  setShowAddCategoryModal
+  setShowAddCategoryModal,
 }) => {
   const pickImage = (e) => {
     setIsLoading(true);
@@ -61,9 +61,9 @@ const AddDishModal = ({
       !addDishData.name ||
       !addDishData.price ||
       !addDishData.category ||
-      addDishData.category === 'add_new_category'
+      addDishData.category === "add_new_category"
     ) {
-      alert('Vui lòng điền đầy đủ tên món, giá và chọn danh mục hợp lệ!');
+      alert("Vui lòng điền đầy đủ tên món, giá và chọn danh mục hợp lệ!");
       return;
     }
     setIsLoading(true);
@@ -71,26 +71,43 @@ const AddDishModal = ({
       const result = await ApiService.addDish(addDishData);
       setCategories(result.categories);
       setAddDishData({
-        name: '',
-        description: '',
-        price: '',
-        category: '',
-        image: 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png?20210521171500',
+        name: "",
+        description: "",
+        price: "",
+        category: "",
+        image:
+          "https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png?20210521171500",
         optionGroups: [],
-        available: false
+        available: false,
       });
       setShowAddDishModal(false);
-      alert('Thành công! Đã thêm món ăn mới!');
+      alert("Thành công! Đã thêm món ăn mới!");
     } catch (error) {
-      alert('Lỗi! Không thể thêm món ăn!');
+      alert("Lỗi! Không thể thêm món ăn!");
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setShowAddDishModal(false);
+    }
+  };
+
   return (
-    <div className={`fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center ${showAddDishModal ? 'block' : 'hidden'}`}>
-      <div className="bg-white rounded-lg overflow-hidden w-[620px] h-[620px] max-w-[90%] max-h-[90%]">
+    <div
+      className={`fixed inset-0 flex items-center justify-center ${
+        showAddDishModal ? "block" : "hidden"
+      }`}
+      style={{
+        backgroundColor: "rgba(0, 0, 0, 0.5)", // Màu đen với độ mờ 50%
+        backdropFilter: "blur(4px)", // Hiệu ứng mờ
+        WebkitBackdropFilter: "blur(4px)", // Hỗ trợ Safari
+      }}
+      onClick={handleOverlayClick}
+    >
+      <div className="bg-white rounded-lg overflow-hidden w-[620px] h-[500px] max-w-[90%] max-h-[90%]">
         <div className="p-5 border-b border-gray-200">
           <p className="text-lg font-semibold text-gray-800">Thêm món ăn mới</p>
         </div>
@@ -99,7 +116,9 @@ const AddDishModal = ({
             <div className="flex flex-col items-center mt-5">
               <div className="relative mb-2">
                 <img
-                  src={addDishData.image || 'https://via.placeholder.com/200x160'}
+                  src={
+                    addDishData.image || "https://via.placeholder.com/200x160"
+                  }
                   alt="Dish"
                   className="w-[200px] h-[160px] rounded-lg bg-gray-100 object-cover"
                 />
@@ -110,7 +129,11 @@ const AddDishModal = ({
                 )}
               </div>
               <label
-                className={`border border-gray-300 rounded-lg px-3 py-2 flex items-center justify-center w-[200px] bg-${isLoading || permissionDenied ? 'gray-100' : 'white'} cursor-${isLoading || permissionDenied ? 'not-allowed' : 'pointer'}`}
+                className={`border border-gray-300 rounded-lg px-3 py-2 flex items-center justify-center w-[200px] bg-${
+                  isLoading || permissionDenied ? "gray-100" : "white"
+                } cursor-${
+                  isLoading || permissionDenied ? "not-allowed" : "pointer"
+                }`}
               >
                 <input
                   type="file"
@@ -119,60 +142,104 @@ const AddDishModal = ({
                   onChange={pickImage}
                   disabled={isLoading || permissionDenied}
                 />
-                <svg className={`w-4 h-4 mr-2 ${isLoading || permissionDenied ? 'text-gray-400' : 'text-gray-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 0115.9 6M9 19h6m-3-3v6" />
+                <svg
+                  className={`w-4 h-4 mr-2 ${
+                    isLoading || permissionDenied
+                      ? "text-gray-400"
+                      : "text-gray-600"
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 0115.9 6M9 19h6m-3-3v6"
+                  />
                 </svg>
-                <span className={`text-sm ${isLoading || permissionDenied ? 'text-gray-400' : 'text-gray-700'}`}>Chọn ảnh</span>
+                <span
+                  className={`text-sm ${
+                    isLoading || permissionDenied
+                      ? "text-gray-400"
+                      : "text-gray-700"
+                  }`}
+                >
+                  Chọn ảnh
+                </span>
               </label>
             </div>
           </div>
           <div className="w-2/3 pl-4 overflow-y-auto">
             <div className="mb-4">
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Tên món ăn</label>
+              <label className="text-sm font-medium text-gray-700 mb-1 block">
+                Tên món ăn
+              </label>
               <input
                 type="text"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
                 placeholder="Nhập tên món ăn"
                 value={addDishData.name}
-                onChange={(e) => setAddDishData({ ...addDishData, name: e.target.value })}
+                onChange={(e) =>
+                  setAddDishData({ ...addDishData, name: e.target.value })
+                }
               />
             </div>
             <div className="mb-4">
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Mô tả</label>
+              <label className="text-sm font-medium text-gray-700 mb-1 block">
+                Mô tả
+              </label>
               <textarea
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm h-20"
                 placeholder="Nhập mô tả món ăn"
                 value={addDishData.description}
-                onChange={(e) => setAddDishData({ ...addDishData, description: e.target.value })}
+                onChange={(e) =>
+                  setAddDishData({
+                    ...addDishData,
+                    description: e.target.value,
+                  })
+                }
               />
             </div>
             <div className="mb-4">
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Giá tiền</label>
+              <label className="text-sm font-medium text-gray-700 mb-1 block">
+                Giá tiền
+              </label>
               <input
                 type="number"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
                 placeholder="Nhập giá tiền"
                 value={addDishData.price}
-                onChange={(e) => setAddDishData({ ...addDishData, price: e.target.value })}
+                onChange={(e) =>
+                  setAddDishData({ ...addDishData, price: e.target.value })
+                }
               />
             </div>
             <div className="mb-4">
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Danh mục</label>
+              <label className="text-sm font-medium text-gray-700 mb-1 block">
+                Danh mục
+              </label>
               <select
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
                 value={addDishData.category}
                 onChange={(e) => {
-                  if (e.target.value === 'add_new_category') {
+                  if (e.target.value === "add_new_category") {
                     setShowAddCategoryModal(true);
-                    setAddDishData({ ...addDishData, category: '' });
+                    setAddDishData({ ...addDishData, category: "" });
                   } else {
-                    setAddDishData({ ...addDishData, category: e.target.value });
+                    setAddDishData({
+                      ...addDishData,
+                      category: e.target.value,
+                    });
                   }
                 }}
               >
                 <option value="">-- Chọn danh mục --</option>
                 {categories.map((category, index) => (
-                  <option key={index} value={category.name}>{category.name}</option>
+                  <option key={index} value={category.name}>
+                    {category.name}
+                  </option>
                 ))}
                 <option value="add_new_category">Thêm danh mục mới</option>
               </select>
