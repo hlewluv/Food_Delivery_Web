@@ -119,6 +119,7 @@ const MenuScreen = () => {
       setOptionGroups(result.optionGroups);
       setAddOptionGroupData({ groupName: '', options: [{ name: '', price: '' }] });
       setShowAddOptionGroupModal(false);
+    // eslint-disable-next-line no-unused-vars
     } catch (error) {
       alert('Không thể thêm nhóm tùy chọn');
     } finally {

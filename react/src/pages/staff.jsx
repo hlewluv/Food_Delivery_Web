@@ -13,7 +13,7 @@ const StaffScreen = () => {
   const [staffList, setStaffList] = useState(initialStaff);
   const [isLoading, setIsLoading] = useState(false);
   const [filterDay, setFilterDay] = useState('all');
-  const [tableRenderKey, setTableRenderKey] = useState(0);
+  // Removed unused tableRenderKey state
 
   useEffect(() => {
     console.log('isLoading changed:', isLoading);
@@ -97,7 +97,6 @@ const StaffScreen = () => {
           setSelectedStaff={setSelectedStaff}
           setShowEditStaffModal={setShowEditStaffModal}
           setIsLoading={setIsLoading}
-          setTableRenderKey={setTableRenderKey}
         />
 
         {isLoading && (

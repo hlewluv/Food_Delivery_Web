@@ -6,6 +6,7 @@ import Home from "../pages/home";
 import Order from "../pages/order"; // Nếu không tồn tại, tạo file hoặc xóa route này
 import Menu from "../pages/menu"; // Nếu không tồn tại, tạo file hoặc xóa route này
 import StaffScreen from "../pages/staff";
+import VoucherScreen from "../pages/voucher"; // Nếu không tồn tại, tạo file hoặc xóa route này
 const AppRoutes = () => {
   return (
     <Routes>
@@ -13,7 +14,7 @@ const AppRoutes = () => {
         <Route path="/merchant/home" element={<Home />} />
         <Route path="/merchant/order" element={<Order />} />
         <Route path="/merchant/menu" element={<Menu />} />
-        <Route path="/merchant/voucher" element={<div>Khuyến mãi</div>} />
+        <Route path="/merchant/voucher" element={<VoucherScreen />} />
         <Route path="/merchant/staff" element={<StaffScreen />} />
         <Route path="/merchant/messages" element={<div>Tin nhắn</div>} />
         <Route path="/merchant/account" element={<div>Tài khoản</div>} />
