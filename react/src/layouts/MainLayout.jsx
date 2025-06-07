@@ -176,7 +176,7 @@ const MainLayout = () => {
           }}
         >
           <img
-            src="https://via.placeholder.com/300x150"
+            src="https://inkythuatso.com/uploads/images/2021/11/logo-grab-inkythuatso-2-01-24-09-59-49.jpg"
             alt="Logo"
             style={{ width: "300px", height: "150px", objectFit: "contain" }}
           />

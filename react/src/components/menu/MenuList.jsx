@@ -46,7 +46,7 @@ const MenuList = ({
   setCategories,
 }) => {
   return (
-    <div className="px-4 pb-20 bg-gray-50">
+    <div className="px-4 pb-20 bg-white">
       <div className="flex justify-between items-center mb-4 mt-4">
         <h2 className="text-2xl font-semibold text-gray-800">Main Menu</h2>
       </div>

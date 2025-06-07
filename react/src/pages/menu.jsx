@@ -144,13 +144,6 @@ const MenuScreen = () => {
     <div className="flex flex-col min-h-screen bg-white">
       {/* Header */}
       <div className="flex items-center p-4 bg-white">
-        <button
-          onClick={() => navigate(-1)}
-          className="p-2"
-          aria-label="Go back"
-        >
-          <FaArrowLeft className="text-gray-600 text-2xl" />
-        </button>
         <h1 className="flex-1 text-center text-xl font-bold text-gray-900">
           Menu
         </h1>
@@ -172,47 +165,67 @@ const MenuScreen = () => {
         ))}
       </div>
 
-      <div className="flex-1 overflow-y-auto pt-5">
+      {/* Content Area */}
+      <div className="flex-1 overflow-y-auto">
+        {/* Add Button Section - Cải tiến */}
         {selectedTab === 'Có sẵn' && (
-          <div className="flex justify-end items-center px-4 mb-2">
+          <div className="flex justify-between items-center px-6 py-4 bg-white/70 backdrop-blur-sm ">
+            <div>
+              <h2 className="text-lg font-semibold text-gray-800">Danh sách món ăn</h2>
+              <p className="text-sm text-gray-500 mt-1">Quản lý các món ăn trong menu của bạn</p>
+            </div>
             <button
               onClick={() => setShowAddDishModal(true)}
-              className="bg-green-600 p-3 rounded-lg text-white"
+              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 p-4 rounded-xl text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 group"
             >
-              <FaPlus />
+              <FaPlus className="group-hover:rotate-90 transition-transform duration-300" />
             </button>
           </div>
         )}
-        {selectedTab === 'Có sẵn' && (
-          <MenuList
-            categories={categories}
-            expandedCategories={expandedCategories}
-            toggleCategory={toggleCategory}
-            handleDishPress={handleDishPress}
-            handleEditCategoryPress={handleEditCategoryPress}
-            setCategories={setCategories}
-          />
-        )}
+
         {selectedTab === 'Tuỳ chọn nhóm' && (
-          <div className="flex justify-end items-center px-4 mb-2">
+          <div className="flex justify-between items-center px-6 py-4 bg-white/70 backdrop-blur-sm border-b border-gray-200/50">
+            <div>
+              <h2 className="text-lg font-semibold text-gray-800">Nhóm tùy chọn</h2>
+              <p className="text-sm text-gray-500 mt-1">Quản lý các tùy chọn bổ sung cho món ăn</p>
+            </div>
             <button
               onClick={() => setShowAddOptionGroupModal(true)}
-              className="bg-green-600 p-3 rounded-lg text-white"
+              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 p-4 rounded-xl text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 group"
             >
-              <FaPlus />
+              <FaPlus className="group-hover:rotate-90 transition-transform duration-300" />
             </button>
           </div>
         )}
-        {selectedTab === 'Tuỳ chọn nhóm' && (
-          <OptionGroupsList
-            optionGroups={optionGroups}
-            expandedOptionGroups={expandedOptionGroups}
-            toggleOptionGroup={toggleOptionGroup}
-            handleEditOptionGroup={handleEditOptionGroup}
-            setOptionGroups={setOptionGroups}
-            setCategories={setCategories}
-          />
-        )}
+
+        {/* Content Container */}
+        <div className="p-4 space-y-4">
+          {selectedTab === 'Có sẵn' && (
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden">
+              <MenuList
+                categories={categories}
+                expandedCategories={expandedCategories}
+                toggleCategory={toggleCategory}
+                handleDishPress={handleDishPress}
+                handleEditCategoryPress={handleEditCategoryPress}
+                setCategories={setCategories}
+              />
+            </div>
+          )}
+
+          {selectedTab === 'Tuỳ chọn nhóm' && (
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden">
+              <OptionGroupsList
+                optionGroups={optionGroups}
+                expandedOptionGroups={expandedOptionGroups}
+                toggleOptionGroup={toggleOptionGroup}
+                handleEditOptionGroup={handleEditOptionGroup}
+                setOptionGroups={setOptionGroups}
+                setCategories={setCategories}
+              />
+            </div>
+          )}
+        </div>
       </div>
       {/* Modals */}
       <Modals
