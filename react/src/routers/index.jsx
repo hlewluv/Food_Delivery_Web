@@ -6,7 +6,7 @@ import Menu from "../pages/menu";
 import StaffScreen from "../pages/staff";
 import VoucherScreen from "../pages/voucher";
 import ProfileScreen from "../pages/account";
-import Login from "../pages/login"; // Giả sử Login.jsx nằm trong thư mục pages
+import Login from "../pages/login";
 
 // Component để bảo vệ các route
 const ProtectedRoute = ({ allowedRoles = ["Host"] }) => {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaUtensils, FaEnvelope } from "react-icons/fa";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import {login} from "../api/auth/authService";
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
