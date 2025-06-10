@@ -143,7 +143,7 @@ const MenuScreen = () => {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* Header */}
-      <div className="flex items-center p-4 bg-white">
+      <div className="flex items-center p-2 bg-white">
         <h1 className="flex-1 text-center text-xl font-bold text-gray-900">
           Menu
         </h1>

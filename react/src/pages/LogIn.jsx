@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { FaUser, FaLock, FaEye, FaEyeSlash, FaUtensils, FaEnvelope } from "react-icons/fa";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {login} from "../api/auth/authService";
+import { useNavigate } from "react-router-dom";
+import { FaUser, FaLock, FaEye, FaEyeSlash, FaUtensils } from "react-icons/fa";
+import { login } from "../data/mockLogin";
+
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -31,26 +31,25 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      // Giả sử hàm login được import từ một file API tương tự
       await login({
         username: formData.username,
         password: formData.password,
       });
 
-      const role = await AsyncStorage.getItem("role");
+      const role = localStorage.getItem("role");
 
       if (role === "Host") {
         navigate("/merchant/home");
+      } else if (role === "Admin") {
+        navigate("/admin/home");
       } else {
-        setErrorMessage("Tài khoản này không có quyền truy cập hệ thống quản lý nhà hàng");
+        setErrorMessage("Tài khoản này không có quyền truy cập hệ thống quản lý");
         setShowErrorModal(true);
       }
     } catch (error) {
       console.error("API Error:", error);
       setErrorMessage(
-        error.response?.data?.message ||
-        error.message ||
-        "Đã xảy ra lỗi không xác định"
+        error.message || "Đã xảy ra lỗi không xác định"
       );
       setShowErrorModal(true);
     } finally {
@@ -77,7 +76,7 @@ const Login = () => {
               <FaUtensils className="text-white text-2xl" />
             </div>
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Muncher</h1>
-            <p className="text-gray-600">Đăng nhập để quản lý nhà hàng của bạn</p>
+            <p className="text-gray-600">Đăng nhập để quản lý hệ thống</p>
           </div>
 
           {/* Login Form */}
@@ -130,7 +129,6 @@ const Login = () => {
                 </button>
               </div>
             </div>
-
 
             {/* Login Button */}
             <button

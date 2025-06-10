@@ -1,4 +1,3 @@
-// MainLayout.jsx
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -34,8 +33,10 @@ const SidebarItem = ({ focused, icon, title, onPress }) => {
 const MainLayout = () => {
   const [activeTab, setActiveTab] = useState("home");
   const navigate = useNavigate();
+  const role = localStorage.getItem("role"); // Get the user's role from localStorage
 
-  const tabs = [
+  // Define tabs for Host role
+  const hostTabs = [
     {
       name: "home",
       icon: (
@@ -143,6 +144,89 @@ const MainLayout = () => {
     },
   ];
 
+  // Define tabs for Admin role
+  const adminTabs = [
+    {
+      name: "home",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          fill={activeTab === "home" ? "#00b14f" : "#6b7280"}
+          viewBox="0 0 24 24"
+        >
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+        </svg>
+      ),
+      title: "Doanh thu",
+    },
+    {
+      name: "restaurant",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          fill={activeTab === "restaurant" ? "#00b14f" : "#6b7280"}
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14h-2v6l5.25 3.15.75-1.23-4.5-2.67z" />
+        </svg>
+      ),
+      title: "Nhà hàng",
+    },
+    {
+      name: "biker",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          fill={activeTab === "biker" ? "#00b14f" : "#6b7280"}
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 15h-2v-2h2v2zm0-4h-2v-2h2v2zm-4 4h-2v-2h2v2zm0-4h-2v-2h2v2zm-4 4H7v-2h2v2zm0-4H7v-2h2v2z" />
+        </svg>
+      ),
+      title: "Tài xế",
+    },
+    {
+      name: "voucher",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          fill={activeTab === "voucher" ? "#00b14f" : "#6b7280"}
+          viewBox="0 0 24 24"
+        >
+          <path d="M21 6h-3V5c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v1H3c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM8 5h8v1H8V5zm5 10h-2v-2h2v2zm0-4h-2V9h2v2z" />
+        </svg>
+      ),
+      title: "Khuyến mãi",
+    },
+    {
+      name: "customer",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          fill={activeTab === "customer" ? "#00b14f" : "#6b7280"}
+          viewBox="0 0 24 24"
+        >
+          <path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05.02.01.05.03.07.04 2.33.83 4.9 2.46 4.9 4.41V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+        </svg>
+      ),
+      title: "Khách hàng",
+    },
+  ];
+
+  // Select tabs based on role
+  const tabs = role === "Admin" ? adminTabs : hostTabs;
+  const basePath = role === "Admin" ? "/admin" : "/merchant";
+
   return (
     <div
       style={{
@@ -192,7 +276,7 @@ const MainLayout = () => {
               title={tab.title}
               onPress={() => {
                 setActiveTab(tab.name);
-                navigate(`/merchant/${tab.name}`);
+                navigate(`${basePath}/${tab.name}`);
               }}
             />
           ))}
@@ -203,8 +287,8 @@ const MainLayout = () => {
         style={{
           flex: 1,
           backgroundColor: "#fff",
-          overflowY: "auto", // Đảm bảo nội dung có thể cuộn
-          minHeight: "100vh", // Đảm bảo container có chiều cao tối thiểu
+          overflowY: "auto",
+          minHeight: "100vh",
         }}
       >
         <Outlet />

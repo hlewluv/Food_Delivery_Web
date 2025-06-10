@@ -161,12 +161,9 @@ const Order = () => {
   );
 
   return (
-    <div className="bg-white min-h-screen p-4">
+    <div className="bg-white min-h-screen">
       {/* Header */}
-      <div className="flex items-center p-4 bg-white border-b border-gray-200">
-        <button onClick={() => navigate('/merchant/home')} className="p-2" aria-label="Quay lại">
-          <FaArrowLeft className="text-gray-600" size={24} />
-        </button>
+      <div className="flex items-center bg-white ">
         <h1 className="flex-1 text-center text-xl font-bold text-gray-900">Đơn hàng</h1>
       </div>
 

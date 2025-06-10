@@ -1,15 +1,15 @@
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { refreshToken } from '../auth/refreshToken';
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { refreshToken } from "../auth/refreshToken";
 
 const apiClient = axios.create({
-  baseURL: 'http://192.168.1.221:8000/user/',
+  baseURL: "http://172.20.10.2:8000/user/",
 });
 
 // Request interceptor
 apiClient.interceptors.request.use(
   async (config) => {
-    const accessToken = await AsyncStorage.getItem('accessToken');
+    const accessToken = await AsyncStorage.getItem("accessToken");
     if (accessToken) {
       config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -24,10 +24,10 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    
+
     if (error.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
-      
+
       try {
         const newAccessToken = await refreshToken();
         if (newAccessToken) {
@@ -35,12 +35,12 @@ apiClient.interceptors.response.use(
           return apiClient(originalRequest);
         }
       } catch (refreshError) {
-        await AsyncStorage.removeItem('accessToken');
-        await AsyncStorage.removeItem('refreshToken');
+        await AsyncStorage.removeItem("accessToken");
+        await AsyncStorage.removeItem("refreshToken");
         // Redirect to login screen
       }
     }
-    
+
     return Promise.reject(error);
   }
 );
